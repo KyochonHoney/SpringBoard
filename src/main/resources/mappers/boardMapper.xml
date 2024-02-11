@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardMapper">
+	<select id="selectAll" resultType="com.es.dto.BoardDto">
+		<![CDATA[
+			SELECT t2.*
+			FROM (SELECT rownum rnum, t.*
+				FROM (SELECT * FROM board order by bno desc)t)t2
+			WHERE t2.rnum >= #{startRnum} AND t2.rnum <= #{endRnum}
+		]]>
+	</select>
+	<select id="selectLastPage" resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT count(*) FROM board
+		]]>
+	</select>
+	<select id="selectBoardDetail" resultType="com.es.dto.BoardDto">
+		<![CDATA[
+			SELECT * FROM board WHERE bno = #{bno}
+		]]>
+	</select>
+	<update id="increaseHitcount">
+		<![CDATA[
+			UPDATE board SET hitcount = hitcount + 1 WHERE bno = #{bno}
+		]]>
+	</update>
+	<update id="writePost">
+		<![CDATA[
+			INSERT INTO board(bno, title, content, writer, writedate, hitcount)
+			VALUES (BOARDBNO.nextval, #{title} , #{content} ,#{writer} ,sysdate, 0)
+		]]>
+	</update>
+	<update id="modifyPost">
+		<![CDATA[
+			UPDATE board SET title = #{title} , content = #{content} WHERE bno = #{bno}
+		]]>
+	</update>
+	<delete id="deletePost">
+		<![CDATA[
+			DELETE FROM board WHERE bno = #{bno}
+		]]>
+	</delete>
+</mapper>
