@@ -3,24 +3,33 @@ package com.es.dao;
 import java.util.ArrayList;
 
 import com.es.dto.BoardDto;
+import com.es.dto.MemberDto;
 
 public interface BoardDao {
-	//°Ô½Ã±Û ´Ù °¡Á®¿À±â
+	//ï¿½ëŸ¹ï¿½ì” ï§ï¿½ï¿½ë‹”ï¿½ë¿‰ ï§ìšŠì¾¶ å¯ƒëš¯ë–†æ¹²ï¿½ åª›ï¿½ï¿½ì¡‡ï¿½ì‚¤æ¹²ï¿½
 	ArrayList<BoardDto> getAllList(int pageNum);
-	//¸¶Áö¸· ÆäÀÌÁö °ª °¡Á®¿À±â
+	//å¯ƒëš¯ë–†æ¹²ï¿½ ï¿½ë‹”ï¿½ë¿‰ ï§ìšŠì¾¶ ï§ë‰ï¿½ï§ï¿½ ï¿½ëŸ¹ï¿½ì” ï§ï¿½ï¿½ê½†è¸°ï¿½ åª›ë½®í€¬ï¿½ì‚¤æ¹²ï¿½
 	int getLastPageNum();
-	//BNOµû¸¥ °Ô½ÃÆÇ ±Û °¡Á®¿À±â
+	//BNOï¿½ë¿‰ ï¿½ë¹ï¿½ë–¦ï¿½ë¸¯ï¿½ë’— å¯ƒëš¯ë–†æ¹²ï¿½ ï¿½ì ™è¹‚ï¿½ åª›ï¿½ï¿½ì¡‡ï¿½ì‚¤æ¹²ï¿½
 	BoardDto getBoardDtoByBno(int bno);
-	//Á¶È¸¼ö ¿Ã¸®±â
-	void increaseHitcount(int bno);
-	//°Ô½Ã±Û ¾²±â
+	//è­°ê³ ì‰¶ï¿½ë‹” ï¿½ë’›ç”±Ñˆë¦°
+	void increaseHitCount(int bno);
+	//å¯ƒëš¯ë–†æ¹²ï¿½ ï¿½ë²æ¹²ï¿½
 	void write(BoardDto dto);
-	//±Û ¼öÁ¤ÇÏ±â
-	void ModifyByBno(int bno, String title, String content);
-	//°Ô½Ã±Û »èÁ¦ÇÏ±â
+	//å¯ƒëš¯ë–†æ¹²ï¿½ ï¿½ë‹”ï¿½ì ™
+	void modifyByBno(int bno, String title, String content);
+	//å¯ƒëš¯ë–†æ¹²ï¿½ ï¿½ê¶˜ï¿½ì £
 	void deletePost(int bno);
-/*
-	//´ñ±Û´Ş±â
+	//æ¿¡ì’“ë ‡ï¿½ì”¤ ï¿½ì†—ï¿½ì”¤.
+	boolean checkLogin(String id, String pw);
+	//ï§ã…»ì¾­ï¿½ì ™è¹‚ï¿½ åª›ï¿½ï¿½ì¡‡ï¿½ì‚¤æ¹²ï¿½
+	MemberDto selectMemberInfo(String id);
+	//ï¿½ì‰¶ï¿½ìåª›ï¿½ï¿½ì—¯
+	void joinMember(String id, String pw, String name, String email);
+	//ì•„ì´ë”” ì¤‘ë³µì²´í¬
+	boolean checkId(String id);
+	/*
+	//å ì™ì˜™æ¦œæª³å ï¿½
 	//ArrayList<ReplyDto> getReplyListByBno(int bno);
 */
 }

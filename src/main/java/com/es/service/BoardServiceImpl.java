@@ -6,22 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.es.dao.BoardDao;
-import com.es.dao.BoardDaoImpl;
 import com.es.dto.BoardDto;
+import com.es.dto.MemberDto;
 
 @Service
 public class BoardServiceImpl implements BoardService{
 	@Autowired
-	BoardDaoImpl bDao;
+	BoardDao bDao;
 	
 	@Override
 	public ArrayList<BoardDto> getBoardListByPageNumber(int page){
-		return bDao.getAllList(page);	//한 페이지에 대한 게시글 가져오기
+		return bDao.getAllList(page);	
 	}
 	
 	@Override
 	public int getLastPageNum() {
-		return bDao.getLastPageNum();	//마지막 페이지 수
+		return bDao.getLastPageNum();
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public void increaseHitcount(int bno) {
-		bDao.increaseHitcount(bno);
+		bDao.increaseHitCount(bno);
 	}
 
 	@Override
@@ -41,12 +41,38 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public void modifyPost(int bno, String title, String content) {
-		bDao.ModifyByBno(bno, title, content);
+		bDao.modifyByBno(bno, title, content);
 	}
 
 	@Override
 	public void deletePost(int bno) {
 		bDao.deletePost(bno);
 	}
+
+	@Override
+	public boolean checkPw(String id, String pw) {
+		return bDao.checkLogin(id, pw);
+	}
+	
+	@Override
+	public MemberDto getMemberList(String id) {
+		return bDao.selectMemberInfo(id);
+	}
+
+	@Override
+	public void joinMember(String id, String pw, String name, String email) {
+		bDao.joinMember(id, pw, name, email);
+	}
+	
+	@Override
+	public ArrayList<BoardDto> getNextList(int page) {
+	    return bDao.getAllList(page);
+	}
+
+	@Override
+	public boolean checkId(String id) {
+		return bDao.checkId(id);
+	}
+	
 	
 }

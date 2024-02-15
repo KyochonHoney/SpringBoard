@@ -5,16 +5,16 @@ public class BoardDto {
 	private String writer;
 	private String title;
 	private String content;
-	private int hitcount;
+	private int hitCount;
 	private String writedate;
 	
 	public BoardDto() {  }
-	public BoardDto(int bno, String writer, String title, String content, int hitcount, String writedate) {
+	public BoardDto(int bno, String writer, String title, String content, int hitCount, String writedate) {
 		this.bno = bno;
 		this.writer = writer;
 		this.title = title;
 		this.content = content;
-		this.hitcount = hitcount;
+		this.hitCount = hitCount;
 		this.writedate = writedate;
 	}
 	public int getBno() {
@@ -41,11 +41,11 @@ public class BoardDto {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public int getHitcount() {
-		return hitcount;
+	public int getHitCount() {
+		return hitCount;
 	}
-	public void setHitcount(int hitcount) {
-		this.hitcount = hitcount;
+	public void setHitCount(int hitcount) {
+		this.hitCount = hitcount;
 	}
 	public String getWritedate() {
 		return writedate;

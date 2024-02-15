@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.es.dto.BoardDto;
+import com.es.dto.MemberDto;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -42,7 +43,7 @@ public class BoardDaoImpl implements BoardDao {
 	}
 	
 	@Override
-	public void increaseHitcount(int bno) {
+	public void increaseHitCount(int bno) {
 		sqlSession.update("BoardMapper.increaseHitcount",bno);
 	}
 	
@@ -53,7 +54,7 @@ public class BoardDaoImpl implements BoardDao {
 	}
 	
 	@Override
-	public void ModifyByBno(int bno, String title, String content) {
+	public void modifyByBno(int bno, String title, String content) {
 		HashMap<String, Object> hmap = new HashMap<String, Object>();
 		hmap.put("bno", bno);
 		hmap.put("title", title);
@@ -65,4 +66,39 @@ public class BoardDaoImpl implements BoardDao {
 	public void deletePost(int bno) {
 		sqlSession.delete("BoardMapper.deletePost", bno);
 	}
+
+	@Override
+	public boolean checkLogin(String id, String pw) {
+		HashMap<String, String> hmap = new HashMap<String, String>();
+		hmap.put("id", id);
+		hmap.put("pw", pw);
+		int count = Integer.parseInt(sqlSession.selectOne("BoardMapper.selectPW", hmap));
+		if(count > 0) {
+			
+		}
+		return (count > 0); 
+	}
+	
+	@Override
+	public MemberDto selectMemberInfo(String id){
+		return sqlSession.selectOne("BoardMapper.selectMemberInfo", id);
+	}
+
+	@Override
+	public void joinMember(String id, String pw, String name, String email) {
+		HashMap<String, String> hmap = new HashMap<String, String>();
+		hmap.put("id", id);
+		hmap.put("pw", pw);
+		hmap.put("name", name);
+		hmap.put("email", email);
+		sqlSession.update("BoardMapper.joinMember", hmap);
+	}
+
+	@Override
+	public boolean checkId(String id) {
+		int cnt = sqlSession.selectOne("BoardMapper.checkId", id);
+		return (cnt == 0) ? true : false;
+	}
+
+	
 }

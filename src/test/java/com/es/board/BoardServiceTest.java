@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.es.dao.BoardDaoImpl;
 import com.es.dto.BoardDto;
+import com.es.dto.MemberDto;
 import com.es.service.BoardService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -40,11 +41,27 @@ public class BoardServiceTest {
    
    @Test
    public void testModifyPost() throws Exception{
-	   svc.modifyPost(5, "test", "�����ϱ�");
+	   svc.modifyPost(5, "test", "占쏙옙占쏙옙占싹깍옙");
    }
    
    @Test
    public void testDeletePost() throws Exception{
 	   svc.deletePost(3);
+   }
+   
+   @Test
+   public void testGetMemberList() throws Exception{
+	   MemberDto dto = svc.getMemberList("joms0308");
+	   System.out.println(dto.getName() + " / " + dto.getId() );
+   }
+   
+   @Test
+   public void testJoinMember() throws Exception{
+	   svc.joinMember("aa", "aa", "�뿬�깮", "aa@naver.com");
+   }
+   
+   @Test
+   public void testCheckId() throws Exception{
+	   System.out.println(svc.checkId("joms0308"));
    }
 }

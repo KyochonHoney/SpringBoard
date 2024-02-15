@@ -42,4 +42,25 @@
 			DELETE FROM board WHERE bno = #{bno}
 		]]>
 	</delete>
+	<select id="selectPW" resultType="java.lang.String">
+		<![CDATA[
+			SELECT count(*) FROM member WHERE id = #{id} AND pw = #{pw}
+		]]>
+	</select>
+	<select id="selectMemberInfo" resultType="com.es.dto.MemberDto">
+		<![CDATA[
+			SELECT * FROM member WHERE id = #{id}
+		]]>
+	</select>
+	<update id="joinMember">
+		<![CDATA[
+			INSERT INTO member(id, pw, name, email)
+			VALUES (#{id}, #{pw}, #{name}, #{email})
+		]]>
+	</update>
+	<select id="checkId" resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT count(*) FROM member WHERE id = #{id}
+		]]>
+	</select>
 </mapper>

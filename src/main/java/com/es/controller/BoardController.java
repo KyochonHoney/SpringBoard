@@ -1,14 +1,20 @@
 package com.es.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.es.dto.BoardDto;
+import com.es.dto.MemberDto;
 import com.es.service.BoardService;
 
 @Controller
@@ -76,5 +82,51 @@ public class BoardController {
 	public String boardDeletePost(int bno) {
 		bService.deletePost(bno);
 		return "forward:/board/list";
+	}
+	
+	@RequestMapping("/join")
+	public String joinPage() {
+		return "join";
+	}
+	
+	@RequestMapping("/join/action")
+	public String startJoinPage(String id, String pw, String name, String email) {
+		bService.joinMember(id, pw, name, email);
+		return "forward:/board/list";
+	}
+	
+	@RequestMapping("/login")
+	public String loginPage() {
+		return "login";
+	}
+	
+	@RequestMapping("/login/action")
+	public String loginCheck(HttpServletRequest request) {
+		String id = request.getParameter("id");
+		String pw = request.getParameter("pw");
+		boolean check = bService.checkPw(id, pw);
+		if(check) {
+			 HttpSession session = request.getSession();
+		     session.setAttribute("memberList", bService.getMemberList(id));
+		     MemberDto dto = (MemberDto)request.getSession().getAttribute("memberList");
+		}
+		return check ? "forward:/board/list" : "login";
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpServletRequest request) {
+		request.getSession().removeAttribute("memberList");
+		return "boardList";
+	}
+	
+	@RequestMapping(value = "/nextList", method = RequestMethod.POST)
+	public @ResponseBody ArrayList<BoardDto> getNextList(@RequestParam("page") int page) {
+	    ArrayList<BoardDto> list = (ArrayList<BoardDto>)bService.getNextList(page);
+	    return list;
+	}
+	
+	@RequestMapping(value = "/checkId", method = RequestMethod.GET)
+	public @ResponseBody String checkId(@RequestParam("id") String id) {
+		return bService.checkId(id) ? "none" : "duplicate";
 	}
 }
